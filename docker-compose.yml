@@ -1,0 +1,9 @@
+version: '3.7'
+
+services:
+  prod:
+    container_name: pdf_generator
+    image: pdf-generator:latest
+    ports:
+      - 3000:3000
+    restart: unless-stopped
