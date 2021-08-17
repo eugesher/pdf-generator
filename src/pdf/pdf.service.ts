@@ -4,12 +4,19 @@ import { CreateOptions } from 'html-pdf';
 import * as path from 'path';
 import { Injectable } from '@nestjs/common';
 import { CreateJobAppicationPdfDto } from './dto/create-job-appication-pdf.dto';
-import { NextFunction, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { getCurrentDate } from '../utils/functions';
 
 @Injectable()
 export class PdfService {
-  create(dto: CreateJobAppicationPdfDto, res: Response, next: NextFunction) {
+  create(
+    dto: CreateJobAppicationPdfDto,
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    console.log(req.body);
+
     const candidateName = `${dto.lastName} ${dto.firstName} ${dto.patronymic}`;
     const careerObjective = dto.careerObjective;
     const signatureDescription = `${dto.lastName} ${dto.firstName[0]}.${dto.patronymic[0]}.`;
@@ -24,7 +31,7 @@ export class PdfService {
 
     const htmlDocument = fs
       .readFileSync(
-        path.join(__dirname, '../../templates/job-application.html'),
+        path.join(__dirname, '../../public/job-application.html'),
         'utf-8',
       )
       .replace('{{candidateName}}', candidateName)
