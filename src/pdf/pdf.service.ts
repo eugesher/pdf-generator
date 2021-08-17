@@ -4,19 +4,12 @@ import { CreateOptions } from 'html-pdf';
 import * as path from 'path';
 import { Injectable } from '@nestjs/common';
 import { CreateJobAppicationPdfDto } from './dto/create-job-appication-pdf.dto';
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Response } from 'express';
 import { getCurrentDate } from '../utils/functions';
 
 @Injectable()
 export class PdfService {
-  create(
-    dto: CreateJobAppicationPdfDto,
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ) {
-    console.log(req.body);
-
+  create(dto: CreateJobAppicationPdfDto, res: Response, next: NextFunction) {
     const candidateName = `${dto.lastName} ${dto.firstName} ${dto.patronymic}`;
     const careerObjective = dto.careerObjective;
     const signatureDescription = `${dto.lastName} ${dto.firstName[0]}.${dto.patronymic[0]}.`;
